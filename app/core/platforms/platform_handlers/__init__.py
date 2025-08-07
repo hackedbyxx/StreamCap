@@ -76,6 +76,9 @@ def get_platform_handler(
 
 def get_platform_info(record_url: str) -> tuple:
     platform_map = {
+        "stripchat.com/": ("stripchat", "stripchat"),
+        "stlivexxx.com/": ("stripchat", "stripchat"),
+        "chaturbate.com/": ("chaturbate", "chaturbate"),
         "douyin.com/": ("抖音直播", "douyin"),
         "https://www.tiktok.com/": ("TikTok直播", "tiktok"),
         "https://live.kuaishou.com/": ("快手直播", "kuaishou"),

@@ -1,0 +1,5 @@
+# pyinstaller -w --onefile --hidden-import=flet,dotenv --icon=assets/icon.ico --add-data "assets;assets" --name="StreamCap" main.py
+#图形界面
+Pyinstaller -F -w --icon=assets/icon.ico --name="StreamCap-Gui" main.py
+#web
+Pyinstaller -F --icon=assets/icon.ico --name="StreamCap-Web" main.py

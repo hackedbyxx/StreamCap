@@ -261,6 +261,7 @@ class LiveStreamRecorder:
                 headers=self.get_headers_params(record_url, self.platform_key)
             )
             ffmpeg_command = ffmpeg_builder.build_command()
+            logger.info(" ".join(ffmpeg_command))
             self.app.page.run_task(
                 self.start_ffmpeg,
                 stream_info.anchor_name,

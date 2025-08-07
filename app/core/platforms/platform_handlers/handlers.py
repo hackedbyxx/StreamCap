@@ -1,5 +1,6 @@
 import streamget
 
+from .stream.MyLiveStream import ChaturbateLiveStream, StripchatLiveStream
 from ....utils.utils import trace_error_decorator
 from .base import PlatformHandler, StreamData
 
@@ -1099,6 +1100,48 @@ class PicartoHandler(PlatformHandler):
         return await self.live_stream.fetch_stream_url(json_data, self.record_quality)
 
 
+class ChaturbateHandler(PlatformHandler):
+    platform = "chaturbate"
+
+    def __init__(
+        self,
+        proxy: str | None = None,
+        cookies: str | None = None,
+        record_quality: str | None = None,
+        platform: str | None = None,
+    ) -> None:
+        super().__init__(proxy, cookies, record_quality, platform)
+        self.live_stream: ChaturbateLiveStream | None = None
+
+    @trace_error_decorator
+    async def get_stream_info(self, live_url: str) -> StreamData:
+        if not self.live_stream:
+            self.live_stream = ChaturbateLiveStream(proxy_addr=self.proxy, cookies=self.cookies)
+        json_data = await self.live_stream.fetch_web_stream_data(url=live_url)
+        return await self.live_stream.fetch_stream_url(json_data, self.record_quality)
+
+
+class StripchatHandler(PlatformHandler):
+    platform = "stripchat"
+
+    def __init__(
+        self,
+        proxy: str | None = None,
+        cookies: str | None = None,
+        record_quality: str | None = None,
+        platform: str | None = None,
+    ) -> None:
+        super().__init__(proxy, cookies, record_quality, platform)
+        self.live_stream: StripchatLiveStream | None = None
+
+    @trace_error_decorator
+    async def get_stream_info(self, live_url: str) -> StreamData:
+        if not self.live_stream:
+            self.live_stream = StripchatLiveStream(proxy_addr=self.proxy, cookies=self.cookies)
+        json_data = await self.live_stream.fetch_web_stream_data(url=live_url)
+        return await self.live_stream.fetch_stream_url(json_data, self.record_quality)
+
+
 CustomHandler.register(r"https?://.*\.(?:flv|m3u8)(\?.*)?$")
 DouyinHandler.register(r"https://.*\.douyin\.com/")
 TikTokHandler.register(r"https://.*\.tiktok\.com/")
@@ -1150,4 +1193,6 @@ LianJieHandler.register(r"https://.*\.lailianjie\.com/")
 MiguHandler.register(r"https://.*\.miguvideo\.com/")
 LaixiuHandler.register(r"https://.*\.imkktv\.com/")
 PicartoHandler.register(r"https://.*\.picarto\.tv/")
+ChaturbateHandler.register(r"https://.*\.chaturbate\.com/")
+StripchatHandler.register(r"https://(.*\.stripchat\.com/|zh\.stlivexxx\.com/)")
 
