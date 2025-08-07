@@ -52,6 +52,8 @@ from .handlers import (
     YoutubeHandler,
     YYHandler,
     ZhihuHandler,
+    ChaturbateHandler,
+    StripchatHandler,
 )
 
 
@@ -144,6 +146,8 @@ def get_platform_info(record_url: str) -> tuple:
 
 
 __all__ = [
+    "ChaturbateHandler",
+    "StripchatHandler",
     "AcfunHandler",
     "BaiduHandler",
     "BigoHandler",

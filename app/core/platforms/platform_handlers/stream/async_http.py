@@ -80,6 +80,7 @@ async def async_req(
         else:
             resp_str = response.text
     except Exception as e:
+        raise e
         resp_str = str(e)
 
     return resp_str

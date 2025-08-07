@@ -868,6 +868,8 @@ class SettingsPage(PageBase):
         is_mobile = self.app.is_mobile
         
         platforms = [
+            "chaturbate",
+            "stripchat",
             "douyin",
             "tiktok",
             "kuaishou",
