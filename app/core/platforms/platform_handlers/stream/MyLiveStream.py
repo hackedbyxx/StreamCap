@@ -156,16 +156,27 @@ class StripchatLiveStream(BaseLiveStream):
                 'is_live': False
             }
 
-        m3u8_url = f"https://edge-hls.doppiocdn.com/hls/{stream_name}/master/{stream_name}_auto.m3u8"
+        m3u8_url = f"https://edge-hls.doppiocdn.com/hls/{stream_name}/master/{stream_name}_auto.m3u8?playlistType=lowLatency"
+
         # m3u8_url = f"https://b-hls-23.doppiocdn.live/hls/{stream_name}/master/{stream_name}_auto.m3u8"
         play_url_list = await self.get_play_url_list(m3u8_url, proxy=self.proxy_addr, headers=self._get_pc_headers())
 
+        direct_url = 'https://b-hls-23.doppiocdn.live/hls/'
+
+        direct_url_list = []
+        for url in play_url_list:
+            url = re.sub(
+                r'https://media-hls\.doppiocdn\.com/b-hls-\d+/',
+                direct_url,
+                url
+            )
+            direct_url_list.append(url)
         return {
             'platform': 'Stripchat',
             'anchor_name': username,
             'is_live': True,
             'm3u8_url': m3u8_url,
-            "play_url_list": play_url_list,
+            "play_url_list": direct_url_list,
             'title': f"{username}'s Stripchat Stream"
         }
 
