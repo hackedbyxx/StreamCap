@@ -123,7 +123,8 @@ class StripchatLiveStream(BaseLiveStream):
         super().__init__(proxy_addr, cookies)
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            # 'Referer': 'https://stripchat.com/',
+            'Referer': 'https://zh.stlivexxx.com',
+            # 'origin': 'https://zh.stlivexxx.com',
             'Cookie': self.cookies or ''
         }
 
@@ -137,10 +138,10 @@ class StripchatLiveStream(BaseLiveStream):
         api_url = f"https://zh.stlivexxx.com/api/front/v2/models/username/{username}/cam"
         response = await async_req(api_url, proxy_addr=self.proxy_addr, headers=self.headers)
         data = json.loads(response)
-        cam_data = data.get('cam', {})
+        cam_data = data.get('cam')
         username = self._extract_username(url)
 
-        if not cam_data.get('isCamAvailable', False):
+        if not cam_data or not cam_data.get('isCamAvailable', False):
             return {
                 'platform': 'Stripchat',
                 'anchor_name': username,
