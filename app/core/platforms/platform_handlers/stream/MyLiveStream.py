@@ -53,6 +53,17 @@ class ChaturbateLiveStream(BaseLiveStream):
         except Exception as e:
             print(f"解析播放列表失败: {e}")
             return None
+
+        direct_url = 'https://edge8-sea.live.mmcdn.com/live-hls/'
+
+        direct_url_list = []
+        for url in play_url_list:
+            url = re.sub(
+                r"https://edge\d+-aus\.live\.mmcdn\.com/live-hls/",
+                direct_url,
+                url
+            )
+            direct_url_list.append(url)
         # play_url_list = await self.get_play_url_list(m3u8_url, proxy=self.proxy_addr, headers=self._get_pc_headers)
         return {
             'platform': 'Chaturbate',
@@ -60,7 +71,7 @@ class ChaturbateLiveStream(BaseLiveStream):
             'is_live': True,
             'm3u8_url': m3u8_url,
             # 'record_url': m3u8_url,
-            "play_url_list": play_url_list,
+            "play_url_list": direct_url_list,
             'title': f"{self._extract_username(url)}'s Chaturbate Stream"
         }
 
@@ -171,6 +182,7 @@ class StripchatLiveStream(BaseLiveStream):
                 url
             )
             direct_url_list.append(url)
+
         return {
             'platform': 'Stripchat',
             'anchor_name': username,
