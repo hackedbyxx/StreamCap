@@ -59,7 +59,7 @@ class ChaturbateLiveStream(BaseLiveStream):
         direct_url_list = []
         for url in play_url_list:
             url = re.sub(
-                r"https://edge\d+-aus\.live\.mmcdn\.com/live-hls/",
+                r"https://[^/]+\.live\.mmcdn\.com/live-hls/",
                 direct_url,
                 url
             )
@@ -67,12 +67,12 @@ class ChaturbateLiveStream(BaseLiveStream):
         # play_url_list = await self.get_play_url_list(m3u8_url, proxy=self.proxy_addr, headers=self._get_pc_headers)
         return {
             'platform': 'Chaturbate',
-            'anchor_name': self._extract_username(url),
+            'anchor_name': username,
             'is_live': True,
             'm3u8_url': m3u8_url,
             # 'record_url': m3u8_url,
             "play_url_list": direct_url_list,
-            'title': f"{self._extract_username(url)}'s Chaturbate Stream"
+            'title': f"{username}'s Chaturbate Stream"
         }
 
 
