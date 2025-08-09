@@ -51,7 +51,7 @@ class RecordingDialog:
                     domain = match.group(1)
                     username = match.group(2)
                 for recording in recordings:
-                    match = re.search(pattern, url_field.value.strip())
+                    match = re.search(pattern, recording.url)
                     if match:
                         domain2 = match.group(1)
                         username2 = match.group(2)
