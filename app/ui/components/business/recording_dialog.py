@@ -40,6 +40,18 @@ class RecordingDialog:
             """Enable or disable the submit button based on whether the URL field is filled."""
             is_active = utils.is_valid_url(url_field.value.strip()) or utils.contains_url(batch_input.value.strip())
             dialog.actions[1].disabled = not is_active
+
+            if is_active:
+                recordings = self.app.record_manager.recordings
+                for recording in recordings:
+                    if recording.url == url_field.value:
+                        is_active = False
+                        dialog.actions[1].disabled = True
+                        break
+            if not is_active:
+                url_field.error_text = self._["url_already_exists"]
+            else:
+                url_field.error_text = None
             self.page.update()
 
         async def update_format_options(e):

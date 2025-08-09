@@ -102,6 +102,7 @@
     "batch_input": "Batch Input",
     "live_room": "Live Room",
     "platform_not_supported_tip": "This platform does not support recording ⚠️",
+    "url_already_exists": "Url already exists!",
     "pick_time": "Pick time",
     "pick_time_tip": "Configure scheduled time",
     "time_out_of_range": "Time out of range",
