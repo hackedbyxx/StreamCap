@@ -1193,6 +1193,6 @@ LianJieHandler.register(r"https://.*\.lailianjie\.com/")
 MiguHandler.register(r"https://.*\.miguvideo\.com/")
 LaixiuHandler.register(r"https://.*\.imkktv\.com/")
 PicartoHandler.register(r"https://.*\.picarto\.tv/")
-ChaturbateHandler.register(r"https://.*\.chaturbate\.com/")
+ChaturbateHandler.register(r"https://(?:[^/]+\.)?chaturbate\.com/")
 StripchatHandler.register(r"https://(.*\.stripchat\.com/|zh\.stlivexxx\.com/)")
 
