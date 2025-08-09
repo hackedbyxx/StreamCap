@@ -1,4 +1,6 @@
+
 import flet as ft
+import re
 
 from ....core.platforms.platform_handlers import get_platform_info
 from ....models.media.audio_format_model import AudioFormat
@@ -43,8 +45,19 @@ class RecordingDialog:
 
             if is_active:
                 recordings = self.app.record_manager.recordings
+                pattern = r"https://(?:[a-z-]+\.)?([a-z]+)\.com/([^/?]+)"
+                match = re.search(pattern, url_field.value.strip())
+                if match:
+                    domain = match.group(1)
+                    username = match.group(2)
                 for recording in recordings:
-                    if recording.url == url_field.value:
+                    match = re.search(pattern, url_field.value.strip())
+                    if match:
+                        domain2 = match.group(1)
+                        username2 = match.group(2)
+                    else:
+                        continue
+                    if domain == domain2 and username == username2:
                         is_active = False
                         dialog.actions[1].disabled = True
                         break
