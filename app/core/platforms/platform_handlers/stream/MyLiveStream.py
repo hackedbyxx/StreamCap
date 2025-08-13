@@ -41,7 +41,7 @@ class ChaturbateLiveStream(BaseLiveStream):
         if not username:
             raise ValueError("Invalid Chaturbate URL")
 
-        api_url = f"https://chaturbate.com/api/chatvideocontext/{username}/"
+        api_url = f"https://stchatx.com/api/chatvideocontext/{username}/"
         response = await async_req(api_url, proxy_addr=self.proxy_addr, headers=self.headers)
         data = json.loads(response)
 
@@ -79,7 +79,7 @@ class ChaturbateLiveStream(BaseLiveStream):
             'is_live': True,
             'm3u8_url': m3u8_url,
             # 'record_url': m3u8_url,
-            "play_url_list": direct_play_url_list,
+            "play_url_list": play_url_list,
             'title': f"{username}'s Chaturbate Stream"
         }
 
