@@ -63,5 +63,9 @@
     "theme_color": "blue",
     "is_grid_view": true,
     "theme_mode": "light",
-    "platform_max_concurrent_requests": "3"
+    "platform_max_concurrent_requests": "3",
+    "direct_url": [
+        "https://edge15-aus.live.mmcdn.com/live-hls/",
+        "https://edge3-chi.live.mmcdn.com/live-hls"
+    ]
 }

@@ -1,16 +1,22 @@
 import json
 import re
+import random
 from typing import Optional
 from urllib.parse import urlparse
 
 import requests
 
+import app
+from app.core.config.config_manager import ConfigManager
 from app.core.platforms.platform_handlers.stream.data import StreamData, wrap_stream
 from app.core.platforms.platform_handlers.stream.async_http import async_req
 from app.core.platforms.platform_handlers.stream.base import BaseLiveStream
 
 
+config_manager = ConfigManager(app.execute_dir)
+
 class ChaturbateLiveStream(BaseLiveStream):
+
     """
     A class for fetching and processing Chaturbate live stream information.
     """
@@ -54,16 +60,18 @@ class ChaturbateLiveStream(BaseLiveStream):
             print(f"解析播放列表失败: {e}")
             return None
 
-        direct_url = 'https://edge8-sea.live.mmcdn.com/live-hls/'
+        direct_url_list = config_manager.get_config_value('cb_direct_url')
+        if not direct_url_list:
+            direct_url_list = ["https://edge15-aus.live.mmcdn.com/live-hls"]
 
-        direct_url_list = []
+        direct_play_url_list = []
         for url in play_url_list:
             url = re.sub(
                 r"https://[^/]+\.live\.mmcdn\.com/live-hls/",
-                direct_url,
+                direct_url_list[random.randint(0, len(direct_url_list) - 1)],
                 url
             )
-            direct_url_list.append(url)
+            direct_play_url_list.append(url)
         # play_url_list = await self.get_play_url_list(m3u8_url, proxy=self.proxy_addr, headers=self._get_pc_headers)
         return {
             'platform': 'Chaturbate',
@@ -71,7 +79,7 @@ class ChaturbateLiveStream(BaseLiveStream):
             'is_live': True,
             'm3u8_url': m3u8_url,
             # 'record_url': m3u8_url,
-            "play_url_list": direct_url_list,
+            "play_url_list": direct_play_url_list,
             'title': f"{username}'s Chaturbate Stream"
         }
 
